@@ -1,16 +1,43 @@
-# React + Vite
+# Insectopia — Act8. Consumo de APIs de Terceros - Login y Sistema con Tabla CRUD
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Plataforma web interactiva de observaciones entomológicas, biodiversidad y taxones con autenticación de usuarios, filtrado dinámico, paginación y operaciones CRUD basadas en prototipo de Figma.
 
-Currently, two official plugins are available:
+---
+### Integrantes del Equipo (Equipo 06)
+* **Diego Revilla Magali Sarai**
+* **Jimenez Victoria Alejandro**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### API Elegida para la Tabla de Datos
+* **API de Observaciones (Tabla / Galería CRUD):** **iNaturalist API**
+  * **Endpoint:** `https://api.inaturalist.org/v1/observations`
+  * **Descripción:** Consulta de observaciones reales de biodiversidad, fotografías de especímenes, nombres científicos, taxones y ubicaciones geográficas.
+* **API de Autenticación (Login):** **DummyJSON Auth API**
+  * **Endpoint:** `https://dummyjson.com/auth/login`
+  * **Credenciales de acceso:** Usuario: `emilys` | Contraseña: `emilyspass`
 
-## React Compiler
+### Link al Proyecto Desplegado en el VPS
+* **URL del Proyecto en el VPS:** [http://67.205.147.44/t3_act8_eq6](http://67.205.147.44/t3_act8_eq6)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## Funcionalidades Principales
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+1. **Autenticación y Rutas Protegidas (`LoginPage.jsx`, `authService.js`):**
+   * Inicio de sesión conectado a DummyJSON con validación de campos y manejo de errores.
+   * Protección de rutas con `react-router-dom` que redirige a `/login` si no existe sesión activa.
+2. **Layout Principal (`Navbar.jsx`, `Sidebar.jsx`):**
+   * Barra superior con foto y nombre del usuario autenticado, buscador, selector de categorías y botón de cierre de sesión.
+   * Menú lateral colapsable y panel derecho de comunidad (*Sugerencias* y *Especies en Tendencia*).
+3. **Consumo de API, Filtros, Paginación y CRUD (`DashboardPage.jsx`, `productsService.js`, `ProductModal.jsx`, `ConfirmModal.jsx`):**
+   * Consumo de `https://api.inaturalist.org/v1/observations` para listar especímenes en galería horizontal.
+   * Búsqueda en tiempo real, filtro por categoría y paginación sincronizada.
+   * Modales para crear nuevas observaciones, editar registros existentes y confirmar eliminación.
+
+---
+
+## Tecnologías Utilizadas
+* **React 18 + Vite**
+* **Tailwind CSS**
+* **React Router DOM**
+* **Lucide React** (Iconografía)
+* **Google Fonts** (*Plus Jakarta Sans* y *Mulish*)
