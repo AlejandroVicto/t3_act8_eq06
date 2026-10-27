@@ -39,3 +39,9 @@
 - **React Router DOM**
 - **Lucide React** (Iconografía)
 - **Google Fonts** (*Plus Jakarta Sans* y *Mulish*)
+
+---
+
+## Capturas de pantalla
+![Login](src/assets/LoginNegre.png)
+![Dashboard](src/assets/Dashboard.png)
