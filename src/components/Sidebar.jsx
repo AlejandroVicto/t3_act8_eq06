@@ -1,7 +1,8 @@
-import { Home, Search, Bell, MessageSquare, User } from 'lucide-react';
+import { Home, LayoutGrid, Search, Bell, MessageSquare, User } from 'lucide-react';
 
-export default function Sidebar({ activeTab = 'inicio', onSelectTab }) {
+export default function Sidebar({ activeTab = 'galeria', onSelectTab }) {
   const navItems = [
+    { id: 'galeria', label: 'Galería', icon: LayoutGrid },
     { id: 'inicio', label: 'Inicio', icon: Home },
     { id: 'buscar', label: 'Buscar', icon: Search },
     { id: 'notificaciones', label: 'Notificaciones', icon: Bell, badge: 5 },
