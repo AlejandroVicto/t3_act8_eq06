@@ -22,42 +22,46 @@ const FALLBACK_IMAGE =
 export const getAll = async () => {
   const requests = INSECT_ORDERS.map(async (order) => {
     const res = await fetch(
-      `https://api.inaturalist.org/v1/observations?taxon_id=${order.id}&quality_grade=research&photos=true&per_page=12&locale=es`
+      `https://api.inaturalist.org/v1/observations?taxon_id=${order.id}&quality_grade=research&photos=true&per_page=15&locale=es`
     );
     if (!res.ok) return [];
     const data = await res.json();
 
-    return (data.results || []).map((obs) => {
-      const commonName =
-        obs.taxon?.preferred_common_name ||
-        obs.taxon?.name ||
-        'Especie en estudio';
-      const scientificName = obs.taxon?.name || 'Insecta sp.';
-      const upvotes = (obs.identifications_count || 1) * 120;
+    return (data.results || [])
+      .filter((obs) => obs?.taxon && (obs.photos?.[0]?.url || obs.taxon?.default_photo?.url))
+      .map((obs) => {
+        const commonName =
+          obs.taxon.preferred_common_name ||
+          obs.taxon.name ||
+          'Especie en estudio';
+        const scientificName = obs.taxon.name || 'Insecta sp.';
+        const rawPhoto = obs.photos?.[0]?.url || obs.taxon.default_photo?.url;
+        const image = rawPhoto ? rawPhoto.replace('square', 'medium') : FALLBACK_IMAGE;
+        const upvotes = (obs.identifications_count || 1) * 120;
 
-      return {
-        id: obs.id,
-        commonName,
-        title: commonName,
-        scientificName,
-        scientific: `(${scientificName})`,
-        category: order.name,
-        taxon: order.name,
-        taxonColor: TAXON_COLORS[order.name] || 'text-lime-400 outline-lime-500/30',
-        location: obs.place_guess || 'Reserva Natural, MX',
-        author: obs.user?.name || obs.user?.login || 'Investigador',
-        handle: `@${obs.user?.login || 'bio_user'}`,
-        timeAgo: obs.observed_on || 'Reciente',
-        time: obs.observed_on || 'Reciente',
-        description:
-          obs.description ||
-          `Avistamiento fotográfico validado por la comunidad taxonómica en ${
-            obs.place_guess || 'hábitat natural'
-          }.`,
-        image: obs.photos?.[0]?.url?.replace('square', 'medium') || FALLBACK_IMAGE,
-        likes: `${upvotes > 999 ? (upvotes / 1000).toFixed(1) + 'K' : upvotes}`,
-      };
-    });
+        return {
+          id: obs.id,
+          commonName,
+          title: commonName,
+          scientificName,
+          scientific: `(${scientificName})`,
+          category: order.name,
+          taxon: order.name,
+          taxonColor: TAXON_COLORS[order.name] || 'text-lime-400 outline-lime-500/30',
+          location: obs.place_guess || 'Ubicación no especificada',
+          coordinates: obs.geojson?.coordinates || null,
+          author: obs.user?.name || obs.user?.login || 'Investigador',
+          handle: `@${obs.user?.login || 'bio_user'}`,
+          timeAgo: obs.observed_on || 'Reciente',
+          time: obs.observed_on || 'Reciente',
+          description:
+            obs.description ||
+            `Avistamiento fotográfico validado por la comunidad taxonómica en ${obs.place_guess || 'hábitat natural'
+            }.`,
+          image,
+          likes: `${upvotes > 999 ? (upvotes / 1000).toFixed(1) + 'K' : upvotes}`,
+        };
+      });
   });
 
   const results = await Promise.all(requests);
