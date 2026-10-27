@@ -1,22 +1,19 @@
 # Insectopia — Act8. Consumo de APIs de Terceros - Login y Sistema con Tabla CRUD
-
-Plataforma web interactiva de observaciones entomológicas, biodiversidad y taxones con autenticación de usuarios, filtrado dinámico, paginación y operaciones CRUD basadas en prototipo de Figma.
-
 ---
 ### Integrantes del Equipo (Equipo 06)
-* **Diego Revilla Magali Sarai**
-* **Jimenez Victoria Alejandro**
+- **Diego Revilla Magali Sarai**
+- **Jimenez Victoria Alejandro**
 
 ### API Elegida para la Tabla de Datos
-* **API de Observaciones (Tabla / Galería CRUD):** **iNaturalist API**
+- **API de Observaciones (Tabla / Galería CRUD):** **iNaturalist API**
   * **Endpoint:** `https://api.inaturalist.org/v1/observations`
   * **Descripción:** Consulta de observaciones reales de biodiversidad, fotografías de especímenes, nombres científicos, taxones y ubicaciones geográficas.
-* **API de Autenticación (Login):** **DummyJSON Auth API**
+- **API de Autenticación (Login):** **DummyJSON Auth API**
   * **Endpoint:** `https://dummyjson.com/auth/login`
   * **Credenciales de acceso:** Usuario: `emilys` | Contraseña: `emilyspass`
 
 ### Link al Proyecto Desplegado en el VPS
-* **URL del Proyecto en el VPS:** [http://67.205.147.44/t3_act8_eq6](http://67.205.147.44/t3_act8_eq6)
+- **URL del Proyecto en el VPS:** [http://67.205.147.44/t3_act8_eq6](http://67.205.147.44/t3_act8_eq6)
 
 ---
 
@@ -32,12 +29,13 @@ Plataforma web interactiva de observaciones entomológicas, biodiversidad y taxo
    * Consumo de `https://api.inaturalist.org/v1/observations` para listar especímenes en galería horizontal.
    * Búsqueda en tiempo real, filtro por categoría y paginación sincronizada.
    * Modales para crear nuevas observaciones, editar registros existentes y confirmar eliminación.
+   * **Nota sobre operaciones de escritura (`POST`, `PUT`, `DELETE`):** Dado que la API pública de iNaturalist es de solo lectura para usuarios no autenticados por OAuth (para proteger su base de datos científica), las peticiones de creación, edición y eliminación en `productsService.js` se envían hacia los endpoints REST de prueba de **DummyJSON** (`https://dummyjson.com/products`), permitiendo ejecutar peticiones HTTP reales con respuesta `200 OK` y reflejar los cambios en el estado local (`useState`) de la galería.
 
 ---
 
 ## Tecnologías Utilizadas
-* **React 18 + Vite**
-* **Tailwind CSS**
-* **React Router DOM**
-* **Lucide React** (Iconografía)
-* **Google Fonts** (*Plus Jakarta Sans* y *Mulish*)
+- **React 18 + Vite**
+- **Tailwind CSS**
+- **React Router DOM**
+- **Lucide React** (Iconografía)
+- **Google Fonts** (*Plus Jakarta Sans* y *Mulish*)
